@@ -1,3 +1,3 @@
 #!/bin/bash
 
-make build/test && build/test all
+make -j build/test && build/test all
