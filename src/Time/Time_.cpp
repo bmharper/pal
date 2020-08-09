@@ -189,22 +189,28 @@ std::string ProfileBatch::Results(Duration unit, std::string indent) {
 		if (x.size() >= 2) {
 			auto stats = math::BasicStats(x);
 			r += tsf::fmt("%s%20s: %.1f %s (± %.1f)\n", indent, var.second, scale * stats.Mean, unitName, scale * stats.Std);
-			se = tsf::fmt("%s%20s: %.1f %s (1 sample)\n", indent, var.second, scale * x[0], unitName);
-			turn r;
+		} else {
+			r += tsf::fmt("%s%20s: %.1f %s (1 sample)\n", indent, var.second, scale * x[0], unitName);
 		}
-		m ath::MeanAndVariance ProfileBatch::ItemStats(std::string item) const {
-			ctor<double> all;
-			r(const auto& s
-			  : Samples) {
-				                 s.Seconds.contains(item))
-									l.push_back(s.Seconds.get(item));
-				                     all.size() == 0) {
-					                     th::MeanAndVariance s;
-					                     Mean = 9e99;
-					                     Std  = 9e99;
-					                     Var  = 9e99;
-					                     turn s;
-					                     turn math::BasicStats(all);
-				                     }
-			} // namespace time
-		}     // namespace bmhpal
+	}
+	return r;
+}
+
+math::MeanAndVariance ProfileBatch::ItemStats(std::string item) const {
+	vector<double> all;
+	for (const auto& s : Samples) {
+		if (s.Seconds.contains(item))
+			all.push_back(s.Seconds.get(item));
+	}
+	if (all.size() == 0) {
+		math::MeanAndVariance s;
+		s.Mean = 9e99;
+		s.Std  = 9e99;
+		s.Var  = 9e99;
+		return s;
+	}
+	return math::BasicStats(all);
+}
+
+} // namespace time
+} // namespace bmhpal

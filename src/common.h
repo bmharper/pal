@@ -42,7 +42,5 @@ typedef SSIZE_T ssize_t;
 
 #include <third_party/spooky/spooky.h>
 
-//#include <third_party/phttp/phttp.h>
-
-#include <third_party/xo/dependencies/ohash/ohashmap.h>
-#include <third_party/xo/dependencies/ohash/ohashset.h>
+#include <third_party/ohash/ohashmap.h>
+#include <third_party/ohash/ohashset.h>

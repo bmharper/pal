@@ -1,0 +1,12 @@
+[submodule "third_party/utfz"]
+	path = third_party/utfz
+	url = https://github.com/IMQS/utfz.git
+[submodule "third_party/tsf"]
+	path = third_party/tsf
+	url = https://github.com/IMQS/tsf.git
+[submodule "third_party/TinyTest"]
+	path = third_party/TinyTest
+	url = https://github.com/IMQS/TinyTest.git
+[submodule "third_party/spooky"]
+	path = third_party/spooky
+	url = https://github.com/jibsen/spooky.git
