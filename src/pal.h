@@ -15,6 +15,7 @@
 #include "Algo/CacheEviction.h"
 #include "Algo/Filter.h"
 #include "Containers/Queue.h"
+#include "Containers/ObjQueue.h"
 #include "Crypto/Rand.h"
 #include "Diff/Diff.h"
 #include "Encoding/Json.h"

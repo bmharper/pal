@@ -10,6 +10,9 @@ namespace bmhpal {
 	Work/job queue
 	==============
 
+	This differs from 'ObjQueue' in that it's just an opaque block of memory, so it's not
+	safe to use with arbitrary C++ objects such as shared pointers.
+
 	* Multithreaded
 	* Simple FIFO
 	* Ring buffer
@@ -73,6 +76,7 @@ private:
 };
 
 // Typed wrapper around Queue
+// If you're reaching for this, consider ObjQueue, which can handle arbitrary C++ objects such as shared pointers.
 template <typename T>
 class TQueue {
 public:

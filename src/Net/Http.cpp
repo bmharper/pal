@@ -38,6 +38,22 @@ void Request::SetHeader(const std::string& key, const std::string& val) {
 	Headers.push_back({key, val});
 }
 
+std::string Request::Dump(size_t truncateBodySize) const {
+	std::string s = Method + " " + URI + "\n";
+	for (const auto& h : Headers) {
+		s += h.first + ": " + h.second + "\n";
+	}
+	s += "\n";
+	if (truncateBodySize == -1) {
+		s += Body;
+	} else {
+		s += Body.substr(0, truncateBodySize);
+		if (Body.length() > truncateBodySize)
+			s += "...";
+	}
+	return s;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,10 +75,18 @@ std::vector<std::string> Response::AllHeaders(const std::string& header) {
 	return res;
 }
 
+void Response::SetHeader(const std::string& key, const std::string& value) {
+	for (auto& h : Headers) {
+		if (strings::EqualsNoCase(h.first, key)) {
+			h.second = value;
+			return;
+		}
+	}
+	Headers.emplace_back(key, value);
+}
+
 std::string Response::StatusAndBody() const {
-	char buf[40];
-	ItoA(Status, buf, 10);
-	return std::string(buf) + " " + Body;
+	return ItoA(Status) + " " + Body;
 }
 
 Error Response::ToError() const {
@@ -71,6 +95,22 @@ Error Response::ToError() const {
 	if (Is2xx())
 		return Error();
 	return ConErr != "" ? Error(ConErr) : Error(StatusAndBody());
+}
+
+std::string Response::Dump(size_t truncateBodySize) const {
+	std::string s = ItoA(Status) + "\n";
+	for (const auto& h : Headers) {
+		s += h.first + ": " + h.second + "\n";
+	}
+	s += "\n";
+	if (truncateBodySize == -1) {
+		s += Body;
+	} else {
+		s += Body.substr(0, truncateBodySize);
+		if (Body.length() > truncateBodySize)
+			s += "...";
+	}
+	return s;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

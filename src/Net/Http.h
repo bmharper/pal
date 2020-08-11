@@ -29,7 +29,8 @@ public:
 	Request(const std::string& method, const std::string& uri, const std::string& body = "");
 	~Request();
 
-	void SetHeader(const std::string& key, const std::string& val);
+	void        SetHeader(const std::string& key, const std::string& val);
+	std::string Dump(size_t truncateBodySize = 100) const; // Dump to string, for debugging
 };
 
 // HTTP Response
@@ -44,12 +45,14 @@ public:
 
 	std::string              Header(const std::string& header);     // Returns first matching header
 	std::vector<std::string> AllHeaders(const std::string& header); // Returns all matching headers
+	void                     SetHeader(const std::string& key, const std::string& value);
 
 	bool Is2xx() const {
 		return Status >= 200 && Status < 300;
 	}
 	std::string StatusAndBody() const;
-	Error       ToError() const; // Returns Error() if Is2xx(). Otherwise, returns ConErr if ConErr is not empty. If ConErr is empty, returns StatusAndBody()
+	Error       ToError() const;                           // Returns Error() if Is2xx(). Otherwise, returns ConErr if ConErr is not empty. If ConErr is empty, returns StatusAndBody()
+	std::string Dump(size_t truncateBodySize = 100) const; // Dump to string, for debugging
 };
 
 struct BMHPAL_API RobustOptions {
