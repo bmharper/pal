@@ -23,6 +23,7 @@ typedef SSIZE_T ssize_t;
 
 #include <third_party/tsf/tsf.h>
 #include <third_party/utfz/utfz.h>
+#include <third_party/CxxUrl/url.hpp>
 
 #ifndef __EMSCRIPTEN__
 #include <openssl/sha.h>

@@ -11,8 +11,6 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #endif
 
-#include <third_party/utfz/utfz.h>
-
 // When compiling for emscripten, then change our behaviour, so that we can cherry-pick
 // select files from the pal library, without having to pull in the world.
 

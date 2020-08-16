@@ -31,6 +31,7 @@ public:
 
 	void        SetHeader(const std::string& key, const std::string& val);
 	std::string Dump(size_t truncateBodySize = 100) const; // Dump to string, for debugging
+	Url         ParseURI() const;                          // Return a parsed Url (CxxUrl) object, or an empty Url() object is URI fails to parse
 };
 
 // HTTP Response

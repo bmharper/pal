@@ -10,3 +10,6 @@
 [submodule "third_party/spooky"]
 	path = third_party/spooky
 	url = https://github.com/jibsen/spooky.git
+[submodule "third_party/CxxUrl"]
+	path = third_party/CxxUrl
+	url = https://github.com/chmike/CxxUrl.git
