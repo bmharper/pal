@@ -18,6 +18,7 @@
 #include "Containers/ObjQueue.h"
 #include "Crypto/Rand.h"
 #include "Diff/Diff.h"
+#include "Encoding/Hex.h"
 #include "Encoding/Json.h"
 #include "Error/Asserts.h"
 #include "Error/Error.h"

@@ -23,6 +23,18 @@ inline uint32_t operator&(ExecFlags a, ExecFlags b) {
 	return (uint32_t) a & (uint32_t) b;
 }
 
+enum class MkDirFlags {
+	None    = 0,
+	Private = 1, // When not private, then mode |= S_IROTH | S_IXOTH
+	ExistOK = 2, // Don't fail if the directory already exists
+};
+inline MkDirFlags operator|(MkDirFlags a, MkDirFlags b) {
+	return MkDirFlags((uint32_t) a | (uint32_t) b);
+}
+inline uint32_t operator&(MkDirFlags a, MkDirFlags b) {
+	return (uint32_t) a & (uint32_t) b;
+}
+
 struct FileAttributes {
 	double   TimeCreate = 0; // Creation time (unix seconds)
 	double   TimeModify = 0; // Last modification time (unix seconds)
@@ -94,7 +106,7 @@ extern BMHPAL_API StaticError ErrEMFILE;
 extern BMHPAL_API StaticError ErrENOENT;
 
 BMHPAL_API void Sleep(time::Duration d);
-BMHPAL_API bool MkDir(const std::string& dir, bool isPrivate);
+BMHPAL_API bool MkDir(const std::string& dir, MkDirFlags flags = MkDirFlags::None);
 BMHPAL_API std::string Cwd(); // Get current working directory
 BMHPAL_API Error       Stat(const std::string& path, FileAttributes& attribs);
 BMHPAL_API Error       FindFiles(std::string dir, std::vector<FindFileItem>& result, const std::string& wc = "*"); // Finds all entries in the given directory that match the wildcard

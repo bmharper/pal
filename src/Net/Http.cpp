@@ -38,6 +38,15 @@ void Request::SetHeader(const std::string& key, const std::string& val) {
 	Headers.push_back({key, val});
 }
 
+std::string Request::GetHeader(const std::string& key) {
+	for (auto& p : Headers) {
+		if (strings::EqualsNoCase(p.first, key)) {
+			return p.second;
+		}
+	}
+	return "";
+}
+
 std::string Request::Dump(size_t truncateBodySize) const {
 	std::string s = Method + " " + URI + "\n";
 	for (const auto& h : Headers) {
@@ -93,6 +102,16 @@ void Response::SetHeader(const std::string& key, const std::string& value) {
 		}
 	}
 	Headers.emplace_back(key, value);
+}
+
+void Response::SetStatusAndBody(int status, const std::string& body) {
+	Status = status;
+	Body   = body;
+}
+
+void Response::SetError(int status, const std::string& body) {
+	SetStatusAndBody(status, body);
+	SetHeader("Content-Type", "text/plain");
 }
 
 std::string Response::StatusAndBody() const {

@@ -6,7 +6,7 @@ namespace url {
 
 // Encodes a container of pair<string,string> into a=b&c=d&...
 template <typename T>
-std::string EncodeQuery(const T& t) {
+std::string EncodeQueryT(const T& t) {
 	std::string r;
 	for (const auto& p : t) {
 		r += modp::url_encode(p.first);
@@ -19,6 +19,14 @@ std::string EncodeQuery(const T& t) {
 	}
 	return r;
 }
+
+// Encodes a container of pair<string,string> into a=b&c=d&...
+inline std::string EncodeQuery(const std::vector<std::pair<std::string, std::string>>& t) {
+	return EncodeQueryT(t);
+}
+
+// Remove trailing slash from a url
+std::string RemoveTrailingSlash(const std::string& url);
 
 } // namespace url
 } // namespace net

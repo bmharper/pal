@@ -129,20 +129,20 @@ BMHPAL_API bool EqualsNoCase(const char* a, const char* b);
 
 template <typename T>
 bool StartsWith(const std::basic_string<T>& a, const std::basic_string<T>& b) {
-	return a.find(b) == 0;
+	return a.size() != 0 && a.find(b) == 0;
 }
 
 inline bool StartsWith(const std::string& a, const char* b) {
-	return a.find(b) == 0;
+	return a.size() != 0 && a.find(b) == 0;
 }
 
 template <typename T>
 bool EndsWith(const std::basic_string<T>& a, const std::basic_string<T>& b) {
-	return a.rfind(b) == a.size() - b.size();
+	return a.size() != 0 && a.rfind(b) == a.size() - b.size();
 }
 
 inline bool EndsWith(const std::string& a, const char* b) {
-	return a.rfind(b) == a.size() - strlen(b);
+	return a.size() != 0 && a.rfind(b) == a.size() - strlen(b);
 }
 
 BMHPAL_API std::string Join(const std::vector<std::string>& parts, const char* joiner);

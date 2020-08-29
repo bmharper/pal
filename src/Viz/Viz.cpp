@@ -30,7 +30,7 @@ void DumpTimeSeriesD(const std::vector<std::pair<double, double>>& ts, Flags fla
 		double y = ts[i].second;
 		str += tsf::fmt("%.6f,%.6f\n", ts[i].first, y);
 	}
-	os::MkDir(Dir(), false);
+	os::MkDir(Dir());
 	auto err = os::WriteFile(fnData, str);
 	BMHPAL_ASSERT(err.OK());
 

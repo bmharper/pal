@@ -177,14 +177,23 @@ BMHPAL_API void Sleep(time::Duration d) {
 #endif
 }
 
-BMHPAL_API bool MkDir(const std::string& dir, bool isPrivate) {
+BMHPAL_API bool MkDir(const std::string& dir, MkDirFlags flags) {
+	bool isPrivate = !!(flags & MkDirFlags::Private);
+	bool existOK   = !!(flags & MkDirFlags::ExistOK);
+
 #if defined(BMHPAL_PLATFORM_WINDOWS)
-	return 0 == _wmkdir(towide(dir).c_str());
+	auto err = _wmkdir(towide(dir).c_str());
+	if (err == -1 && errno == EEXIST && existOK)
+		return true;
+	return err == 0;
 #elif defined(BMHPAL_PLATFORM_LINUX) || defined(BMHPAL_PLATFORM_APPLE)
 	int mode = S_IRWXU | S_IRWXG;
 	if (!isPrivate)
 		mode |= S_IROTH | S_IXOTH;
-	return 0 == mkdir(dir.c_str(), mode);
+	auto err = mkdir(dir.c_str(), mode);
+	if (err == -1 && errno == EEXIST && existOK)
+		return true;
+	return err == 0;
 #else
 	BMHPAL_TODO_STATIC
 #endif
