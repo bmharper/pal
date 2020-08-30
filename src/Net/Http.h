@@ -32,6 +32,7 @@ public:
 	void        SetHeader(const std::string& key, const std::string& val);
 	std::string GetHeader(const std::string& key);         // Does a case-insensitive search
 	std::string Dump(size_t truncateBodySize = 100) const; // Dump to string, for debugging
+	std::string DumpShort() const;                         // Dump to string, for debugging. Method and URL only
 	Url         ParseURI() const;                          // Return a parsed Url (CxxUrl) object, or an empty Url() object is URI fails to parse
 };
 
@@ -55,8 +56,9 @@ public:
 	void        SetStatusAndBody(int status, const std::string& body);
 	void        SetError(int status, const std::string& body); // Calls SetStatusAndBody, and also sets the Content-Type to "text/plain"
 	std::string StatusAndBody() const;
-	Error       ToError() const;                           // Returns Error() if Is2xx(). Otherwise, returns ConErr if ConErr is not empty. If ConErr is empty, returns StatusAndBody()
-	std::string Dump(size_t truncateBodySize = 100) const; // Dump to string, for debugging
+	Error       ToError() const;                               // Returns Error() if Is2xx(). Otherwise, returns ConErr if ConErr is not empty. If ConErr is empty, returns StatusAndBody()
+	std::string Dump(size_t truncateBodySize = 100) const;     // Dump to string, for debugging
+	std::string DumpShort(size_t truncateBodySize = 50) const; // Dump to string, for debugging. Status code and body only
 };
 
 struct BMHPAL_API RobustOptions {

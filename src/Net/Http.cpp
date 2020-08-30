@@ -63,6 +63,10 @@ std::string Request::Dump(size_t truncateBodySize) const {
 	return s;
 }
 
+std::string Request::DumpShort() const {
+	return Method + " " + URI;
+}
+
 Url Request::ParseURI() const {
 	try {
 		Url u(URI);
@@ -132,6 +136,18 @@ std::string Response::Dump(size_t truncateBodySize) const {
 		s += h.first + ": " + h.second + "\n";
 	}
 	s += "\n";
+	if (truncateBodySize == -1) {
+		s += Body;
+	} else {
+		s += Body.substr(0, truncateBodySize);
+		if (Body.length() > truncateBodySize)
+			s += "...";
+	}
+	return s;
+}
+
+std::string Response::DumpShort(size_t truncateBodySize) const {
+	std::string s = ItoA(Status) + " ";
 	if (truncateBodySize == -1) {
 		s += Body;
 	} else {
